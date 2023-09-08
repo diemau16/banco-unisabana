@@ -16,7 +16,7 @@ public class ClienteController {
         this.clienteLogica = clienteLogica;
     }
 
-    @PostMapping(path = "/cliente/crear")
+    @PostMapping(path = "/cliente/agregar")
     public RespuestaDTO guardarCliente(@RequestBody ClienteDTO cliente) {
         clienteLogica.guardarCliente(cliente);
         return new RespuestaDTO("Cliente creado correctamente.");
