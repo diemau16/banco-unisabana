@@ -20,6 +20,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("mysql:mysql-connector-java:8.0.30")
+	compileOnly("org.projectlombok:lombok:1.18.24")
 }
 
 tasks.withType<Test> {
