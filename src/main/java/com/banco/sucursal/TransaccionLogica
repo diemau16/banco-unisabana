@@ -1,0 +1,24 @@
+package com.banco.sucursal;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+@Entity
+@Table
+public class Transaccion {
+    @Id
+    @Column
+    String idTransaccion;
+    @Column
+    LocalDate horaTransaccion;
+    @Column
+    BigDecimal tipoTransaccion;
+    @Column
+    String idClienteOrigen;
+    @Column
+    String idClienteDestino;
+    @Column
+    String idProductoDestino;
+    @Column
+    double monto;
+}
