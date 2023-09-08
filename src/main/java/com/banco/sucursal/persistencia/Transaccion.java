@@ -14,19 +14,19 @@ import java.time.LocalDateTime;
 public class Transaccion {
     @Id
     @Column
-    private String idTransaccion;
+    private int idTransaccion;
     @Column
     private LocalDateTime horaTransaccion;
     @Column
     private int tipoTransaccion;
     @Column
-    private String idClienteOrigen;
+    private int idClienteOrigen;
     @Column
-    private String idProductoOrigen;
+    private int idProductoOrigen;
     @Column
-    private String idClienteDestino;
+    private int idClienteDestino;
     @Column
-    private String idProductoDestino;
+    private int idProductoDestino;
     @Column
     private float monto;
 }

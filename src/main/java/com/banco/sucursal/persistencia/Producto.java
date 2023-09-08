@@ -13,9 +13,9 @@ import javax.persistence.Table;
 public class Producto {
     @Id
     @Column
-    private String idProducto;
+    private int idProducto;
     @Column
-    private String idCliente;
+    private int idCliente;
     @Column
     private int tipoProducto;
     @Column

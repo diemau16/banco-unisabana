@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class Cliente {
     @Id
     @Column
-    private String idCliente;
+    private int idCliente;
     @Column
     private String nombres;
     @Column
