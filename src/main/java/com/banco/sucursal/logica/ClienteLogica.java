@@ -27,4 +27,15 @@ public class ClienteLogica {
     public List<Cliente> obtenerClientes() {
         return clienteRepository.findAll();
     }
+
+    public boolean eliminarCliente(int idCliente) {
+        List<Cliente> listaClientes = obtenerClientes();
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getIdCliente() == idCliente) {
+                clienteRepository.delete(cliente);
+                return true;
+            }
+        }
+        return false;
+    }
 }
