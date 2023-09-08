@@ -5,6 +5,8 @@ import com.banco.sucursal.persistencia.Cliente;
 import com.banco.sucursal.persistencia.ClienteRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClienteLogica {
     private ClienteRepository clienteRepository;
@@ -20,5 +22,9 @@ public class ClienteLogica {
         clienteBD.setEdad(clienteDTO.getEdad());
         clienteBD.setSaldoCliente(0);
         clienteRepository.save(clienteBD);
+    }
+
+    public List<Cliente> obtenerClientes() {
+        return clienteRepository.findAll();
     }
 }
