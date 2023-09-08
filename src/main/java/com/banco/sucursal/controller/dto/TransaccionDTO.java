@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class TransaccionDTO {
-    private int idTransaccion;
     private int tipoTransaccion;
     private int idClienteOrigen;
     private int idProductoOrigen;
