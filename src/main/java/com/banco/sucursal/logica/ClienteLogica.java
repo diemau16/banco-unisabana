@@ -45,15 +45,13 @@ public class ClienteLogica {
     }
 
     public void desactivarCliente(int idCliente) {
-        Cliente cliente;
-        cliente = encontrarCliente(idCliente);
+        Cliente cliente = encontrarCliente(idCliente);
         cliente.setActivo(false);
         clienteRepository.save(cliente);
     }
 
     public void activarCliente(int idCliente) {
-        Cliente cliente;
-        cliente = encontrarCliente(idCliente);
+        Cliente cliente = encontrarCliente(idCliente);
         cliente.setActivo(true);
         clienteRepository.save(cliente);
     }
