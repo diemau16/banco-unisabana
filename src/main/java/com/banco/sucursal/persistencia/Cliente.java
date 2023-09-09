@@ -15,6 +15,8 @@ public class Cliente {
     @Column
     private int idCliente;
     @Column
+    private boolean activo;
+    @Column
     private String nombres;
     @Column
     private String apellidos;

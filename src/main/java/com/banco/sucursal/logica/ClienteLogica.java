@@ -1,6 +1,7 @@
 package com.banco.sucursal.logica;
 
 import com.banco.sucursal.controller.dto.ClienteDTO;
+import com.banco.sucursal.controller.dto.RespuestaDTO;
 import com.banco.sucursal.persistencia.Cliente;
 import com.banco.sucursal.persistencia.ClienteRepository;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class ClienteLogica {
 
     public void guardarCliente(ClienteDTO clienteDTO) {
         Cliente clienteBD = new Cliente();
+        clienteBD.setActivo(true);
         clienteBD.setNombres(clienteDTO.getNombres());
         clienteBD.setApellidos(clienteDTO.getApellidos());
         clienteBD.setEdad(clienteDTO.getEdad());
@@ -28,19 +30,32 @@ public class ClienteLogica {
     }
 
     public Cliente obtenerClientePorId(int idCliente) {
-        return clienteRepository.getReferenceById(idCliente);
-    }
-
-    public boolean eliminarCliente(int idCliente) {
-        /*
         List<Cliente> listaClientes = obtenerClientes();
         for (Cliente cliente : listaClientes) {
-            if (cliente.getIdCliente() == idCliente) {
-                clienteRepository.delete(cliente);
-                return true;
+            if (idCliente == cliente.getIdCliente()) {
+                return cliente;
             }
-        }*/
-        clienteRepository.deleteById(idCliente);
-        return false;
+        }
+        throw new IllegalArgumentException("No existe el cliente.");
+    }
+
+    public void desactivarCliente(int idCliente) {
+        List<Cliente> listaClientes = obtenerClientes();
+        for (Cliente cliente : listaClientes) {
+            if (idCliente == cliente.getIdCliente()) {
+                cliente.setActivo(false);
+            }
+        }
+        throw new IllegalArgumentException("No existe el cliente.");
+    }
+
+    public void activarCliente(int idCliente) {
+        List<Cliente> listaClientes = obtenerClientes();
+        for (Cliente cliente : listaClientes) {
+            if (idCliente == cliente.getIdCliente()) {
+                cliente.setActivo(true);
+            }
+        }
+        throw new IllegalArgumentException("No existe el cliente.");
     }
 }

@@ -33,12 +33,23 @@ public class ClienteController {
         return clienteLogica.obtenerClientePorId(idCliente);
     }
 
-    @DeleteMapping(path = "cliente/eliminar/{idCliente}")
-    public RespuestaDTO eliminarCliente(@PathVariable int idCliente) {
-        if (clienteLogica.eliminarCliente(idCliente)) {
-            return new RespuestaDTO("Eliminado correctamente.");
-        } else {
-            return new RespuestaDTO("No se encontro el cliente.");
+    @PutMapping(path = "cliente/desactivar/{idCliente}")
+    public RespuestaDTO desactivarCliente(@PathVariable int idCliente) {
+        try {
+            clienteLogica.desactivarCliente(idCliente);
+            return new RespuestaDTO("Desactivado correctamente.");
+        } catch (IllegalArgumentException e) {
+            return new RespuestaDTO("Cliente no se pudo desactivar: " + e.getMessage());
+        }
+    }
+
+    @PutMapping(path = "cliente/activar/{idCliente}")
+    public RespuestaDTO activarCliente(@PathVariable int idCliente) {
+        try {
+            clienteLogica.activarCliente(idCliente);
+            return new RespuestaDTO("Activado correctamente.");
+        } catch (IllegalArgumentException e) {
+            return new RespuestaDTO("Cliente no se pudo activar: " + e.getMessage());
         }
     }
 }
