@@ -28,7 +28,7 @@ public class ClienteController {
         return clienteLogica.obtenerClientes();
     }
 
-    @GetMapping(path = "/cliente/obtener/{id}")
+    @GetMapping(path = "/cliente/obtener/{idCliente}")
     public Cliente obtenerClientePorId(@PathVariable int idCliente) {
         return clienteLogica.obtenerClientePorId(idCliente);
     }
