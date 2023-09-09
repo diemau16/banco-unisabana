@@ -1,4 +1,5 @@
 package com.banco.sucursal.controller;
+
 import com.banco.sucursal.controller.dto.RespuestaDTO;
 import com.banco.sucursal.controller.dto.TransaccionDTO;
 import com.banco.sucursal.logica.TransaccionLogica;
@@ -21,7 +22,7 @@ public class TransaccionController {
         try {
             transaccionLogica.realizarTransaccion(transaccion);
             return new RespuestaDTO("Transaccion realizada correctamente.");
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return new RespuestaDTO("La transaccion no se pudo realizar: " + e.getMessage());
         }
     }
