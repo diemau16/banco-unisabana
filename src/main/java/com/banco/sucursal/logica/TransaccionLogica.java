@@ -7,6 +7,7 @@ import com.banco.sucursal.persistencia.TransaccionRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,6 +31,28 @@ public class TransaccionLogica {
 
     public List<Transaccion> obtenerTransacciones() {
         return transaccionRepository.findAll();
+    }
+
+    public List<Transaccion> obtenerTransaccionesPorIdCliente(int idCliente) {
+        List<Transaccion> listaTransacciones = transaccionRepository.findAll();
+        List<Transaccion> listaResultados = new ArrayList<>();
+        for (Transaccion transaccion : listaTransacciones) {
+            if (transaccion.getIdClienteOrigen() == idCliente || transaccion.getIdClienteDestino() == idCliente) {
+                listaResultados.add(transaccion);
+            }
+        }
+        return listaResultados;
+    }
+
+    public List<Transaccion> obtenerTransaccionesPorClienteYTipo(int idCliente, int tipoTransaccion) {
+        List<Transaccion> listaTransacciones = transaccionRepository.findAll();
+        List<Transaccion> listaResultados = new ArrayList<>();
+        for (Transaccion transaccion : listaTransacciones) {
+            if ((transaccion.getIdClienteOrigen() == idCliente || transaccion.getIdClienteDestino() == idCliente) && transaccion.getTipoTransaccion() == tipoTransaccion) {
+                listaResultados.add(transaccion);
+            }
+        }
+        return listaResultados;
     }
 
     public void realizarTransaccion(TransaccionDTO transaccionDTO) {

@@ -31,4 +31,14 @@ public class TransaccionController {
     public List<Transaccion> obtenerTransaccion() {
         return transaccionLogica.obtenerTransacciones();
     }
+
+    @GetMapping(path = "/transaccion/consultar/{idCliente}")
+    public List<Transaccion> obtenerTransaccionesPorIdCliente(@PathVariable int idCliente) {
+        return transaccionLogica.obtenerTransaccionesPorIdCliente(idCliente);
+    }
+
+    @GetMapping(path = "/transaccion/consultar/{idCliente}/{tipoTransaccion}")
+    public List<Transaccion> obtenerTransaccionesPorIdCliente(@PathVariable int idCliente, @PathVariable int tipoTransaccion) {
+        return transaccionLogica.obtenerTransaccionesPorClienteYTipo(idCliente, tipoTransaccion);
+    }
 }
