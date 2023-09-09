@@ -5,6 +5,7 @@ import com.banco.sucursal.persistencia.Producto;
 import com.banco.sucursal.persistencia.Transaccion;
 import com.banco.sucursal.persistencia.TransaccionRepository;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,8 +22,10 @@ public class TransaccionLogica {
     private int idProductoDestino;
     private float monto;
 
-    public TransaccionLogica(TransaccionRepository transaccionRepository) {
+    public TransaccionLogica(TransaccionRepository transaccionRepository, ClienteLogica clienteLogica, ProductoLogica productoLogica) {
         this.transaccionRepository = transaccionRepository;
+        this.clienteLogica = clienteLogica;
+        this.productoLogica = productoLogica;
     }
 
     public List<Transaccion> obtenerTransacciones() {
@@ -42,6 +45,15 @@ public class TransaccionLogica {
             case 2 -> deposito();
             case 3 -> retiro();
             default -> throw new IllegalArgumentException(tipoTransaccion + " no es un tipo de transaccion valido.");
+        }
+    }
+
+    private boolean verificarPropiedadProducto(int idCliente, int idProducto) {
+        Producto producto = productoLogica.encontrarProducto(idProducto);
+        if (producto.getIdCliente() == idCliente) {
+            return true;
+        } else {
+            throw new IllegalArgumentException("El cliente no es propietario del producto.");
         }
     }
 
@@ -72,7 +84,7 @@ public class TransaccionLogica {
     }
 
     private void transferencia() {
-        if (verificarOrigen() && verificarDestino() && verificarMonto()) {
+        if (verificarOrigen() && verificarDestino() && verificarPropiedadProducto(idClienteOrigen, idProductoOrigen) && verificarPropiedadProducto(idClienteDestino, idProductoDestino) && verificarMonto()) {
             Producto productoOrigen = productoLogica.encontrarProducto(idProductoOrigen);
             Producto productoDestino = productoLogica.encontrarProducto(idProductoDestino);
             productoOrigen.setSaldoProducto(productoOrigen.getSaldoProducto() - monto);
@@ -84,7 +96,7 @@ public class TransaccionLogica {
     }
 
     private void deposito() {
-        if (verificarDestino() && monto > 0) {
+        if (verificarDestino() && monto > 0 && verificarPropiedadProducto(idClienteDestino, idProductoDestino)) {
             Producto productoDestino = productoLogica.encontrarProducto(idProductoDestino);
             productoDestino.setSaldoProducto(productoDestino.getSaldoProducto() + monto);
             productoLogica.guardarBD(productoDestino);
@@ -95,7 +107,7 @@ public class TransaccionLogica {
     }
 
     private void retiro() {
-        if (verificarOrigen() && verificarMonto()) {
+        if (verificarOrigen() && verificarMonto() && verificarPropiedadProducto(idClienteOrigen, idProductoOrigen)) {
             Producto productoOrigen = productoLogica.encontrarProducto(idProductoOrigen);
             productoOrigen.setSaldoProducto(productoOrigen.getSaldoProducto() - monto);
             productoLogica.guardarBD(productoOrigen);
