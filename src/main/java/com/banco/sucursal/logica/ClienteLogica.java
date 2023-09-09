@@ -17,6 +17,16 @@ public class ClienteLogica {
         this.clienteRepository = clienteRepository;
     }
 
+    public Cliente encontrarCliente(int idCliente) {
+        List<Cliente> listaClientes = obtenerClientes();
+        for (Cliente cliente : listaClientes) {
+            if (idCliente == cliente.getIdCliente()) {
+                return cliente;
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe el cliente.");
+    }
+
     public void guardarCliente(ClienteDTO clienteDTO) {
         Cliente clienteBD = new Cliente();
         clienteBD.setActivo(true);
@@ -31,36 +41,20 @@ public class ClienteLogica {
     }
 
     public Cliente obtenerClientePorId(int idCliente) {
-        List<Cliente> listaClientes = obtenerClientes();
-        for (Cliente cliente : listaClientes) {
-            if (idCliente == cliente.getIdCliente()) {
-                return cliente;
-            }
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe el cliente.");
+        return encontrarCliente(idCliente);
     }
 
     public void desactivarCliente(int idCliente) {
-        List<Cliente> listaClientes = obtenerClientes();
-        for (Cliente cliente : listaClientes) {
-            if (idCliente == cliente.getIdCliente()) {
-                cliente.setActivo(false);
-                clienteRepository.save(cliente);
-                return;
-            }
-        }
-        throw new IllegalArgumentException("No existe el cliente.");
+        Cliente cliente;
+        cliente = encontrarCliente(idCliente);
+        cliente.setActivo(false);
+        clienteRepository.save(cliente);
     }
 
     public void activarCliente(int idCliente) {
-        List<Cliente> listaClientes = obtenerClientes();
-        for (Cliente cliente : listaClientes) {
-            if (idCliente == cliente.getIdCliente()) {
-                cliente.setActivo(true);
-                clienteRepository.save(cliente);
-                return;
-            }
-        }
-        throw new IllegalArgumentException("No existe el cliente.");
+        Cliente cliente;
+        cliente = encontrarCliente(idCliente);
+        cliente.setActivo(true);
+        clienteRepository.save(cliente);
     }
 }
