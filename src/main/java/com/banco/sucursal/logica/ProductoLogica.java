@@ -27,6 +27,20 @@ public class ProductoLogica {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe el cliente.");
     }
 
+    public boolean existeProducto(int idProducto) {
+        List<Producto> listaProductos = obtenerProductos();
+        for (Producto producto : listaProductos) {
+            if (idProducto == producto.getIdProducto()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void guardarBD (Producto producto) {
+        productoRepository.save(producto);
+    }
+
     public void guardarProducto(ProductoDTO productoDTO) {
         Producto productoBD = new Producto();
         productoBD.setIdCliente(productoDTO.getIdCliente());

@@ -17,7 +17,7 @@ public class ClienteLogica {
         this.clienteRepository = clienteRepository;
     }
 
-    public Cliente encontrarCliente(int idCliente) {
+    private Cliente encontrarCliente(int idCliente) {
         List<Cliente> listaClientes = obtenerClientes();
         for (Cliente cliente : listaClientes) {
             if (idCliente == cliente.getIdCliente()) {
@@ -25,6 +25,16 @@ public class ClienteLogica {
             }
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe el cliente.");
+    }
+
+    public boolean existeCliente(int idCliente) {
+        List<Cliente> listaClientes = obtenerClientes();
+        for (Cliente cliente : listaClientes) {
+            if (idCliente == cliente.getIdCliente()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void guardarCliente(ClienteDTO clienteDTO) {
