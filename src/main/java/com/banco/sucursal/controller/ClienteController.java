@@ -28,6 +28,11 @@ public class ClienteController {
         return clienteLogica.obtenerClientes();
     }
 
+    @GetMapping(path = "/cliente/obtener/{id}")
+    public Cliente obtenerClientePorId(@PathVariable int idCliente) {
+        return clienteLogica.obtenerClientePorId(idCliente);
+    }
+
     @DeleteMapping(path = "cliente/eliminar/{idCliente}")
     public RespuestaDTO eliminarCliente(@PathVariable int idCliente) {
         if (clienteLogica.eliminarCliente(idCliente)) {

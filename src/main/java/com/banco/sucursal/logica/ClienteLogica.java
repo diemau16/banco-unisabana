@@ -28,14 +28,20 @@ public class ClienteLogica {
         return clienteRepository.findAll();
     }
 
+    public Cliente obtenerClientePorId(int idCliente) {
+        return clienteRepository.getReferenceById(idCliente);
+    }
+
     public boolean eliminarCliente(int idCliente) {
+        /*
         List<Cliente> listaClientes = obtenerClientes();
         for (Cliente cliente : listaClientes) {
             if (cliente.getIdCliente() == idCliente) {
                 clienteRepository.delete(cliente);
                 return true;
             }
-        }
+        }*/
+        clienteRepository.deleteById(idCliente);
         return false;
     }
 }
