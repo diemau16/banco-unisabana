@@ -2,7 +2,6 @@ package com.banco.sucursal.controller;
 import com.banco.sucursal.controller.dto.RespuestaDTO;
 import com.banco.sucursal.controller.dto.TransaccionDTO;
 import com.banco.sucursal.logica.TransaccionLogica;
-import com.banco.sucursal.persistencia.Cliente;
 import com.banco.sucursal.persistencia.Transaccion;
 import org.springframework.web.bind.annotation.*;
 

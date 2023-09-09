@@ -20,7 +20,6 @@ public class ClienteLogica {
         clienteBD.setNombres(clienteDTO.getNombres());
         clienteBD.setApellidos(clienteDTO.getApellidos());
         clienteBD.setEdad(clienteDTO.getEdad());
-        clienteBD.setSaldoCliente(0);
         clienteRepository.save(clienteBD);
     }
 

@@ -20,6 +20,4 @@ public class Cliente {
     private String apellidos;
     @Column
     private int edad;
-    @Column
-    private float saldoCliente;
 }
