@@ -20,4 +20,6 @@ public class Producto {
     private int tipoProducto;
     @Column
     private float saldoProducto;
+    @Column
+    private boolean activo;
 }
