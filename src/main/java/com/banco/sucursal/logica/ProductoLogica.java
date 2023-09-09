@@ -13,9 +13,11 @@ import java.util.List;
 @Service
 public class ProductoLogica {
     private ProductoRepository productoRepository;
+    private ClienteLogica clienteLogica;
 
-    public ProductoLogica(ProductoRepository productoRepository) {
+    public ProductoLogica(ProductoRepository productoRepository, ClienteLogica clienteLogica) {
         this.productoRepository = productoRepository;
+        this.clienteLogica = clienteLogica;
     }
 
     public Producto encontrarProducto(int idProducto) {
@@ -42,12 +44,31 @@ public class ProductoLogica {
         productoRepository.save(producto);
     }
 
+    private boolean verificarCliente(int idCliente) {
+        if (clienteLogica.existeCliente(idCliente)) {
+            return true;
+        } else {
+            throw new IllegalArgumentException("No existe el cliente.");
+        }
+    }
+
+    private boolean verificarTipoProducto(int tipoProducto) {
+        if (tipoProducto >= 1 && tipoProducto <= 4) {
+            return true;
+        } else {
+            throw new IllegalArgumentException("No existe el tipo de producto.");
+        }
+    }
+
     public void guardarProducto(ProductoDTO productoDTO) {
-        Producto productoBD = new Producto();
-        productoBD.setIdCliente(productoDTO.getIdCliente());
-        productoBD.setTipoProducto(productoDTO.getTipoProducto());
-        productoBD.setActivo(true);
-        productoRepository.save(productoBD);
+        if (verificarCliente(productoDTO.getIdCliente()) && verificarTipoProducto(productoDTO.getTipoProducto())) {
+            Producto productoBD = new Producto();
+            productoBD.setIdCliente(productoDTO.getIdCliente());
+            productoBD.setTipoProducto(productoDTO.getTipoProducto());
+            productoBD.setSaldoProducto(0);
+            productoBD.setActivo(true);
+            productoRepository.save(productoBD);
+        }
     }
 
     public List<Producto> obtenerProductos() {
