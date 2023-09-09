@@ -37,19 +37,19 @@ public class ProductoLogica {
         return null;
     }
 
-    public void desactivarProducto(int idCliente) {
+    public void desactivarProducto(int idProducto) {
         List<Producto> listaProductos = obtenerProductos();
         for (Producto producto : listaProductos) {
-            if (idCliente == producto.getIdCliente()) {
+            if (idProducto == producto.getIdProducto()) {
                 producto.setActivo(false);
             }
         }
     }
 
-    public void activarCliente(int idCliente) {
+    public void activarProducto(int idProducto) {
         List<Producto> listaProductos = obtenerProductos();
         for (Producto producto : listaProductos) {
-            if (idCliente == producto.getIdCliente()) {
+            if (idProducto == producto.getIdProducto()) {
                 producto.setActivo(true);
             }
         }
