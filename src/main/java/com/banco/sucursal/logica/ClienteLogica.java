@@ -43,6 +43,7 @@ public class ClienteLogica {
         for (Cliente cliente : listaClientes) {
             if (idCliente == cliente.getIdCliente()) {
                 cliente.setActivo(false);
+                return;
             }
         }
         throw new IllegalArgumentException("No existe el cliente.");
@@ -53,6 +54,7 @@ public class ClienteLogica {
         for (Cliente cliente : listaClientes) {
             if (idCliente == cliente.getIdCliente()) {
                 cliente.setActivo(true);
+                return;
             }
         }
         throw new IllegalArgumentException("No existe el cliente.");
