@@ -42,6 +42,7 @@ public class ProductoLogica {
         for (Producto producto : listaProductos) {
             if (idProducto == producto.getIdProducto()) {
                 producto.setActivo(false);
+                productoRepository.save(producto);
                 return;
             }
         }
@@ -52,6 +53,7 @@ public class ProductoLogica {
         for (Producto producto : listaProductos) {
             if (idProducto == producto.getIdProducto()) {
                 producto.setActivo(true);
+                productoRepository.save(producto);
                 return;
             }
         }

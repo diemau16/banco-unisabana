@@ -3,7 +3,9 @@ package com.banco.sucursal.logica;
 import com.banco.sucursal.controller.dto.ClienteDTO;
 import com.banco.sucursal.persistencia.Cliente;
 import com.banco.sucursal.persistencia.ClienteRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class ClienteLogica {
                 return cliente;
             }
         }
-        throw new IllegalArgumentException("No existe el cliente.");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe el cliente.");
     }
 
     public void desactivarCliente(int idCliente) {
@@ -43,6 +45,7 @@ public class ClienteLogica {
         for (Cliente cliente : listaClientes) {
             if (idCliente == cliente.getIdCliente()) {
                 cliente.setActivo(false);
+                clienteRepository.save(cliente);
                 return;
             }
         }
@@ -54,6 +57,7 @@ public class ClienteLogica {
         for (Cliente cliente : listaClientes) {
             if (idCliente == cliente.getIdCliente()) {
                 cliente.setActivo(true);
+                clienteRepository.save(cliente);
                 return;
             }
         }
