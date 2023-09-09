@@ -23,7 +23,7 @@ public class ClienteController {
         return new RespuestaDTO("Cliente creado correctamente.");
     }
 
-    @GetMapping(path = "cliente/obtener")
+    @GetMapping(path = "/cliente/obtener")
     public List<Cliente> obtenerClientes() {
         return clienteLogica.obtenerClientes();
     }
@@ -33,7 +33,7 @@ public class ClienteController {
         return clienteLogica.obtenerClientePorId(idCliente);
     }
 
-    @PutMapping(path = "cliente/desactivar/{idCliente}")
+    @PutMapping(path = "/cliente/desactivar/{idCliente}")
     public RespuestaDTO desactivarCliente(@PathVariable int idCliente) {
         try {
             clienteLogica.desactivarCliente(idCliente);
@@ -43,7 +43,7 @@ public class ClienteController {
         }
     }
 
-    @PutMapping(path = "cliente/activar/{idCliente}")
+    @PutMapping(path = "/cliente/activar/{idCliente}")
     public RespuestaDTO activarCliente(@PathVariable int idCliente) {
         try {
             clienteLogica.activarCliente(idCliente);
