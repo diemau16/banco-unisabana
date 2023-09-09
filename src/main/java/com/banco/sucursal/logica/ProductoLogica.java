@@ -18,7 +18,7 @@ public class ProductoLogica {
     public void guardarProducto(ProductoDTO productoDTO) {
         Producto productoBD = new Producto();
         productoBD.setIdCliente(productoDTO.getIdCliente());
-        productoBD.setTipoProducto(productoBD.getTipoProducto());
+        productoBD.setTipoProducto(productoDTO.getTipoProducto());
         productoBD.setActivo(true);
         productoRepository.save(productoBD);
     }
