@@ -36,7 +36,6 @@ public class TransaccionLogica {
         tipoTransaccion = transaccionDTO.getTipoTransaccion();
         idClienteOrigen = transaccionDTO.getIdClienteOrigen();
         idProductoOrigen = transaccionDTO.getIdProductoOrigen();
-        idClienteDestino = transaccionDTO.getIdClienteDestino();
         idProductoDestino = transaccionDTO.getIdProductoDestino();
         monto = transaccionDTO.getMonto();
 
@@ -66,7 +65,7 @@ public class TransaccionLogica {
     }
 
     private boolean verificarDestino() {
-        if (clienteLogica.existeCliente(idClienteDestino) && productoLogica.existeProducto(idProductoDestino)) {
+        if (productoLogica.existeProducto(idProductoDestino)) {
             return true;
         } else {
             throw new IllegalArgumentException("Los datos de destino no son validos o estan incompletos.");
@@ -84,11 +83,12 @@ public class TransaccionLogica {
     }
 
     private void transferencia() {
-        if (verificarOrigen() && verificarDestino() && verificarPropiedadProducto(idClienteOrigen, idProductoOrigen) && verificarPropiedadProducto(idClienteDestino, idProductoDestino) && verificarMonto()) {
+        if (verificarOrigen() && verificarDestino() && verificarPropiedadProducto(idClienteOrigen, idProductoOrigen) && verificarMonto()) {
             Producto productoOrigen = productoLogica.encontrarProducto(idProductoOrigen);
             Producto productoDestino = productoLogica.encontrarProducto(idProductoDestino);
             productoOrigen.setSaldoProducto(productoOrigen.getSaldoProducto() - monto);
             productoDestino.setSaldoProducto(productoDestino.getSaldoProducto() + monto);
+            idClienteDestino = productoDestino.getIdCliente();
             productoLogica.guardarBD(productoOrigen);
             productoLogica.guardarBD(productoDestino);
             guardarTransaccionTransferencia();
@@ -96,9 +96,10 @@ public class TransaccionLogica {
     }
 
     private void deposito() {
-        if (verificarDestino() && monto > 0 && verificarPropiedadProducto(idClienteDestino, idProductoDestino)) {
+        if (verificarDestino() && monto > 0) {
             Producto productoDestino = productoLogica.encontrarProducto(idProductoDestino);
             productoDestino.setSaldoProducto(productoDestino.getSaldoProducto() + monto);
+            idClienteDestino = productoDestino.getIdCliente();
             productoLogica.guardarBD(productoDestino);
             guardarTransaccionDeposito();
         } else {

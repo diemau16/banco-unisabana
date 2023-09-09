@@ -7,7 +7,6 @@ public class TransaccionDTO {
     private int tipoTransaccion;
     private int idClienteOrigen;
     private int idProductoOrigen;
-    private int idClienteDestino;
     private int idProductoDestino;
     private float monto;
 }
