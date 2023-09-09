@@ -19,6 +19,8 @@ public class ProductoLogica {
         Producto productoBD = new Producto();
         productoBD.setIdCliente(productoDTO.getIdCliente());
         productoBD.setTipoProducto(productoBD.getTipoProducto());
+        productoBD.setActivo(true);
+        productoRepository.save(productoBD);
     }
 
     public List<Producto> obtenerProductos(){
@@ -35,14 +37,21 @@ public class ProductoLogica {
         return null;
     }
 
-    public boolean eliminarProducto(int idCliente){
+    public void desactivarProducto(int idCliente) {
         List<Producto> listaProductos = obtenerProductos();
-        for (Producto producto : listaProductos){
-            if (producto.getIdCliente() == idCliente){
-                productoRepository.delete(producto);
-                return true;
+        for (Producto producto : listaProductos) {
+            if (idCliente == producto.getIdCliente()) {
+                producto.setActivo(false);
             }
         }
-        return false;
+    }
+
+    public void activarCliente(int idCliente) {
+        List<Producto> listaProductos = obtenerProductos();
+        for (Producto producto : listaProductos) {
+            if (idCliente == producto.getIdCliente()) {
+                producto.setActivo(true);
+            }
+        }
     }
 }

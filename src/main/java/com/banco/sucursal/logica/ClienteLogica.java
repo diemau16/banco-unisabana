@@ -1,7 +1,6 @@
 package com.banco.sucursal.logica;
 
 import com.banco.sucursal.controller.dto.ClienteDTO;
-import com.banco.sucursal.controller.dto.RespuestaDTO;
 import com.banco.sucursal.persistencia.Cliente;
 import com.banco.sucursal.persistencia.ClienteRepository;
 import org.springframework.stereotype.Service;
