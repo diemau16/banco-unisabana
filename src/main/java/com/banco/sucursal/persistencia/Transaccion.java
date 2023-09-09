@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table
@@ -16,7 +16,7 @@ public class Transaccion {
     @Column
     private int idTransaccion;
     @Column
-    private LocalDateTime horaTransaccion;
+    private LocalDate horaTransaccion;
     @Column
     private int tipoTransaccion;
     @Column
