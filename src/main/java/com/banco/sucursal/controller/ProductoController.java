@@ -27,9 +27,14 @@ public class ProductoController {
         return productoLogica.obtenerProductos();
     }
 
-    @GetMapping(path = "/producto/obtener/{idCliente}")
-    public Producto obtenerProductoPorIdCliente(@PathVariable int idCliente) {
-        return productoLogica.obtenerProductoPorId(idCliente);
+    @GetMapping(path = "/producto/obtener/cliente/{idCliente}")
+    public List<Producto> obtenerProductoPorIdCliente(@PathVariable int idCliente) {
+        return productoLogica.obtenerProductoPorIdCliente(idCliente);
+    }
+
+    @GetMapping(path = "/producto/obtener/{idProducto}")
+    public Producto obtenerProductoPorIdProducto(@PathVariable int idProducto) {
+        return productoLogica.obtenerProductoPorIdProducto(idProducto);
     }
 
     @PutMapping(path = "/producto/desactivar/{idProducto}")

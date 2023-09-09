@@ -7,13 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ProductoLogica {
     private ProductoRepository productoRepository;
 
-    public ProductoLogica(ProductoRepository productoRepository){
+    public ProductoLogica(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
     }
 
@@ -37,7 +38,7 @@ public class ProductoLogica {
         return false;
     }
 
-    public void guardarBD (Producto producto) {
+    public void guardarBD(Producto producto) {
         productoRepository.save(producto);
     }
 
@@ -49,18 +50,23 @@ public class ProductoLogica {
         productoRepository.save(productoBD);
     }
 
-    public List<Producto> obtenerProductos(){
+    public List<Producto> obtenerProductos() {
         return productoRepository.findAll();
     }
 
-    public Producto obtenerProductoPorId(int idCliente){
+    public List<Producto> obtenerProductoPorIdCliente(int idCliente) {
         List<Producto> listaProductos = obtenerProductos();
-        for (Producto producto : listaProductos){
-            if (producto.getIdCliente() == idCliente){
-                return producto;
+        List<Producto> listaProductosResultados = new ArrayList<>();
+        for (Producto producto : listaProductos) {
+            if (producto.getIdCliente() == idCliente) {
+                listaProductosResultados.add(producto);
             }
         }
-        return null;
+        return listaProductosResultados;
+    }
+
+    public Producto obtenerProductoPorIdProducto(int idProducto) {
+        return encontrarProducto(idProducto);
     }
 
     public void desactivarProducto(int idProducto) {
