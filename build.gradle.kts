@@ -2,6 +2,7 @@ plugins {
     java
     id("org.springframework.boot") version "2.7.15"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
+    jacoco
 }
 
 group = "com.banco"
@@ -31,4 +32,19 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        csv.required.set(true)
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.8"
 }
