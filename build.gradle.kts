@@ -43,6 +43,13 @@ tasks.jacocoTestReport {
     reports {
         csv.required.set(true)
     }
+    classDirectories.setFrom(
+            files(classDirectories.files.map {
+                fileTree(it) {
+                    exclude("**/com/banco/sucursal/persistencia/**", "**/com/banco/sucursal/controller/dto/**")
+                }
+            })
+    )
 }
 
 jacoco {
