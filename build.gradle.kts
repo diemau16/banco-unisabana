@@ -2,6 +2,7 @@ plugins {
     java
     id("org.springframework.boot") version "2.7.15"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
+    id("org.springdoc.openapi-gradle-plugin") version "1.7.0"
     jacoco
 }
 
@@ -21,6 +22,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("mysql:mysql-connector-java:8.0.30")
+    implementation("org.springdoc:springdoc-openapi-ui:1.7.0")
 
     compileOnly("org.projectlombok:lombok:1.18.24")
     annotationProcessor("org.projectlombok:lombok:1.18.24")
