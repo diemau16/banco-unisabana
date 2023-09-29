@@ -2,10 +2,7 @@ package com.banco.sucursal.persistencia;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table
@@ -13,6 +10,7 @@ import javax.persistence.Table;
 public class Producto {
     @Id
     @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idProducto;
     @Column
     private int idCliente;
