@@ -264,8 +264,7 @@ class TransaccionLogicaTest {
         Producto productoSimulado = new Producto();
         productoSimulado.setSaldoProducto(saldoProductoOrigen);
 
-        when(productoLogica.encontrarProducto(0))
-                .thenReturn(productoSimulado);
+        when(productoLogica.encontrarProducto(0)).thenReturn(productoSimulado);
         assertThrows(IllegalArgumentException.class, () -> {
             logica.verificarMonto();
         });
@@ -278,8 +277,7 @@ class TransaccionLogicaTest {
         Producto productoSimulado = new Producto();
         productoSimulado.setSaldoProducto(saldoProductoOrigen);
 
-        when(productoLogica.encontrarProducto(0))
-                .thenReturn(productoSimulado);
+        when(productoLogica.encontrarProducto(0)).thenReturn(productoSimulado);
         boolean resultado = logica.verificarMonto();
         assertTrue(resultado);
     }
@@ -314,5 +312,43 @@ class TransaccionLogicaTest {
         assertEquals(600, productoDestino.getSaldoProducto());
         verify(productoLogica, times(1)).guardarBD(productoOrigen);
         verify(productoLogica, times(1)).guardarBD(productoDestino);
+    }
+
+    @Test
+    void Dado_datosDeProducto_Cuando_deposito_Entonces_realizarDeposito() {
+        logica.monto = 300;
+        logica.idClienteDestino = 1;
+        logica.idProductoDestino = 1;
+
+        Producto productoDestino = new Producto();
+        productoDestino.setIdProducto(logica.idProductoDestino);
+        productoDestino.setIdCliente(logica.idClienteDestino);
+        productoDestino.setSaldoProducto(logica.monto);
+
+        when(productoLogica.existeProducto(logica.idProductoDestino)).thenReturn(true);
+        when(productoLogica.encontrarProducto(logica.idProductoDestino)).thenReturn(productoDestino);
+
+        logica.deposito();
+
+        assertEquals(600, productoDestino.getSaldoProducto());
+        verify(productoLogica, times(1)).guardarBD(productoDestino);
+    }
+
+    @Test
+    void Dado_datosMontoInvalido_Cuando_deposito_Entonces_lanzarExcepcion() {
+        logica.monto = 0;
+        logica.idClienteDestino = 1;
+        logica.idProductoDestino = 1;
+
+        Producto productoDestino = new Producto();
+        productoDestino.setIdProducto(logica.idProductoDestino);
+        productoDestino.setIdCliente(logica.idClienteDestino);
+        productoDestino.setSaldoProducto(logica.monto);
+
+        when(productoLogica.existeProducto(logica.idProductoDestino)).thenReturn(true);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            logica.deposito();
+        });
     }
 }
