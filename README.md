@@ -12,8 +12,7 @@
 -Transferencia de fondos perimite a los usuarios realizar transferencia de dinero entre sus propias cuentas o hacia cuenta de terceros
 
 ##Como se ejecuta
-Para ejecutar este proyecto, primero asegúrate de tener configurado el entorno de desarrollo y las herramientas necesarias instaladas, como Java, Gradle Klotlin (para construir el proyecto), y una base de datos MySQL (que debe estar disponible en jdbc:mysql://sql.freedb.tech:3306/freedb_banco_database).
-Configuración de la base de datos:
+Para ejecutar este proyecto, primero asegúrate de tener configurado el entorno de desarrollo y las herramientas necesarias instaladas, como Java, Gradle Klotlin (para construir el proyecto)
 
 Verifica que el servidor de la base de datos esté ejecutándose y que puedes acceder a él desde la dirección sql.freedb.tech en el puerto 3306.
 Clona el proyecto:
