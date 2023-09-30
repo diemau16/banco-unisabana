@@ -6,6 +6,9 @@ import lombok.Data;
 public class RespuestaDTO {
     private String respuesta;
 
+    public RespuestaDTO() {
+    }
+
     public RespuestaDTO(String respuesta) {
         this.respuesta = respuesta;
     }
