@@ -17,7 +17,7 @@ public class ClienteLogica {
         this.clienteRepository = clienteRepository;
     }
 
-    private Cliente encontrarCliente(int idCliente) {
+    public Cliente encontrarCliente(int idCliente) {
         List<Cliente> listaClientes = obtenerClientes();
         for (Cliente cliente : listaClientes) {
             if (idCliente == cliente.getIdCliente()) {
