@@ -70,7 +70,7 @@ public class TransaccionLogica {
         }
     }
 
-    private boolean verificarPropiedadProducto(int idCliente, int idProducto) {
+    public boolean verificarPropiedadProducto(int idCliente, int idProducto) {
         Producto producto = productoLogica.encontrarProducto(idProducto);
         if (producto.getIdCliente() == idCliente) {
             return true;
@@ -79,7 +79,7 @@ public class TransaccionLogica {
         }
     }
 
-    private boolean verificarOrigen() {
+    public boolean verificarOrigen() {
         if (clienteLogica.existeCliente(idClienteOrigen) && productoLogica.existeProducto(idProductoOrigen)) {
             return true;
         } else {
@@ -87,7 +87,7 @@ public class TransaccionLogica {
         }
     }
 
-    private boolean verificarDestino() {
+    public boolean verificarDestino() {
         if (productoLogica.existeProducto(idProductoDestino)) {
             return true;
         } else {
@@ -95,7 +95,7 @@ public class TransaccionLogica {
         }
     }
 
-    private boolean verificarMonto() {
+    public boolean verificarMonto() {
         if (monto <= 0) {
             throw new IllegalArgumentException("El monto tiene que ser un valor positivo.");
         } else if (monto > productoLogica.encontrarProducto(idProductoOrigen).getSaldoProducto()) {
@@ -105,7 +105,7 @@ public class TransaccionLogica {
         }
     }
 
-    private void transferencia() {
+    public void transferencia() {
         if (verificarOrigen() && verificarDestino() && verificarPropiedadProducto(idClienteOrigen, idProductoOrigen) && verificarMonto()) {
             Producto productoOrigen = productoLogica.encontrarProducto(idProductoOrigen);
             Producto productoDestino = productoLogica.encontrarProducto(idProductoDestino);
@@ -118,7 +118,7 @@ public class TransaccionLogica {
         }
     }
 
-    private void deposito() {
+    public void deposito() {
         if (verificarDestino() && monto > 0) {
             Producto productoDestino = productoLogica.encontrarProducto(idProductoDestino);
             productoDestino.setSaldoProducto(productoDestino.getSaldoProducto() + monto);
@@ -130,7 +130,7 @@ public class TransaccionLogica {
         }
     }
 
-    private void retiro() {
+    public void retiro() {
         if (verificarOrigen() && verificarMonto() && verificarPropiedadProducto(idClienteOrigen, idProductoOrigen)) {
             Producto productoOrigen = productoLogica.encontrarProducto(idProductoOrigen);
             productoOrigen.setSaldoProducto(productoOrigen.getSaldoProducto() - monto);
@@ -139,7 +139,7 @@ public class TransaccionLogica {
         }
     }
 
-    private void guardarTransaccionTransferencia() {
+    public void guardarTransaccionTransferencia() {
         transaccionBD.setHoraTransaccion(LocalDateTime.now());
         transaccionBD.setTipoTransaccion(tipoTransaccion);
         transaccionBD.setIdClienteOrigen(idClienteOrigen);
@@ -150,7 +150,7 @@ public class TransaccionLogica {
         transaccionRepository.save(transaccionBD);
     }
 
-    private void guardarTransaccionDeposito() {
+    public void guardarTransaccionDeposito() {
         transaccionBD.setHoraTransaccion(LocalDateTime.now());
         transaccionBD.setTipoTransaccion(tipoTransaccion);
         transaccionBD.setIdClienteOrigen(0);
@@ -161,7 +161,7 @@ public class TransaccionLogica {
         transaccionRepository.save(transaccionBD);
     }
 
-    private void guardarTransaccionRetiro() {
+    public void guardarTransaccionRetiro() {
         transaccionBD.setHoraTransaccion(LocalDateTime.now());
         transaccionBD.setTipoTransaccion(tipoTransaccion);
         transaccionBD.setIdClienteOrigen(idClienteOrigen);
