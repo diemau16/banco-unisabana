@@ -1,38 +1,60 @@
-# restapi-banco
+# Rest API de un banco
 
-##Integrantes del equipo
- -Andres Felipe Lanza Torres
- -Diego Mauricio Acosta Rodriguez
- -Joseph Daniel Mantilla Castro
-##Funciones del Proyecto
--Crear Cliente
--Interacturar con productos del banco(Tipo de cuenta de ahorros y tipo de tarjeta de credito)
--Consultar Saldo incluyendo consulta por producto
--Historial de de Transacciones incluyendo depositos, transferencias, retiros y pagos.
--Transferencia de fondos perimite a los usuarios realizar transferencia de dinero entre sus propias cuentas o hacia cuenta de terceros
+## Integrantes del equipo
 
-##Como se ejecuta
-Para ejecutar este proyecto, primero asegúrate de tener configurado el entorno de desarrollo y las herramientas necesarias instaladas, como Java, Gradle Klotlin (para construir el proyecto)
+ - Andres Felipe Lanza Torres
+ - Diego Mauricio Acosta Rodriguez
+ - Joseph Daniel Mantilla Castro
 
-Verifica que el servidor de la base de datos esté ejecutándose y que puedes acceder a él desde la dirección sql.freedb.tech en el puerto 3306.
-Clona el proyecto:
+## Funciones del Proyecto
 
-Clona o descarga el proyecto desde un repositorio de código fuente, como GitHub, y colócalo en tu sistema.
-Descarga todas las dependencias y pon a correr el spring
-Uso de la aplicación:
+Las siguientes son las funciones con las que cuenta la aplicación:
+- Crear Cliente.
+- Interacturar con productos del banco(Tipo de cuenta de ahorros y tipo de tarjeta de credito).
+- Crear productos nuevos.
+- Consultar Saldo incluyendo consulta por producto.
+- Cambiar entre estados activo e inactivo de Cliente y Producto.
+- Hacer transferencias entre cuentas, depósitos y retiros
+- Historial de de Transacciones incluyendo depositos, transferencias y retiros.
+- Transferencia de fondos perimite a los usuarios realizar transferencia de dinero entre sus propias cuentas o hacia cuenta de terceros.
 
-La aplicación se ejecutará en el puerto 8081, según lo especificado en server.port=8081 en la configuración.
-Puedes acceder a la API a través de un cliente REST como Postman
+## Cómo se ejecuta
 
-Puedes acceder a la API a través de un cliente REST como Postman o utilizando un navegador web o corra swagger en el navegador
+### Ejecutar el proyecto:
 
-Endpoints de la API:
+- Debes tener instalados IntelliJ Idea y Java (preferiblemente 17).
+- Clona o descarga el repositorio desde GitHub, y colócalo en tu sistema.
+- Desde IntelliJ Idea, busca el proyecto y abre build.gradle.kts como proyecto.
+- Ve a build.gradle.kts y da clic en "Load script configurations".
+- Ejecuta el proyecto desde SucursalApplication
 
-Aquí hay algunos ejemplos de cómo utilizar los endpoints de la API:
-Agregar un cliente: POST http://localhost:8081/cliente/agregar
-Obtener todos los clientes: GET http://localhost:8081/cliente/obtener
-Obtener un cliente por ID: GET http://localhost:8081/cliente/obtener/{idCliente}
-Desactivar un cliente: PUT http://localhost:8081/cliente/desactivar/{idCliente}
-Activar un cliente: PUT http://localhost:8081/cliente/activar/{idCliente}
+### Uso de la aplicación:
 
+La aplicación se ejecutará en el puerto 8081 del computador, como está especificado en server.port=8081 en la configuración en application.properties.
 
+Puedes utilizar el proyecto de las siguientes formas:
+- Accediendo a la API a través de Postman, para poder hacer peticiones HTTP.
+- Ingresando la URL "localhost:8081/*", donde podrás hacer peticiones mediante PathVariable, pero no podrás hacer peticiones PUT y POST que utilizan RequestBody.
+- Ingresando a Swagger a través del siguiente link "http://localhost:8081/swagger-ui/index.html#/", donde podrás ejecutar las peticiones igual que en Postman, pero de una manera más organizada y con las estructuras preestablecidas.
+
+### Endpoints de la API:
+
+Los siguientes son los endpoints mediante los cuales se puede hacer uso de la API:
+#### Cliente
+- Agregar un cliente (POST): /cliente/agregar
+- Obtener todos los clientes (GET): /cliente/obtener
+- Obtener un cliente por ID (GET): /cliente/obtener/{idCliente}
+- Desactivar un cliente (PUT): /cliente/desactivar/{idCliente}
+- Activar un cliente (PUT): /cliente/activar/{idCliente}
+#### Producto
+- Agregar un producto (POST): /producto/agregar
+- Obtener todos los productos (GET): /producto/obtener
+- Obtener producto por ID producto (GET): /producto/obtener/{idProducto}
+- Obtener productos por ID cliente (GET): /producto/obtener/cliente/{idCliente]
+- Activar producto (PUT): /producto/activar/{idProducto}
+- Desactivar producto (PUT): /producto/desactivar/{idProducto}
+#### Transaccion
+- Nueva transacción (POST): /transaccion/nueva
+- Ver todas las transacciones (GET): /transaccion/consultar
+- Ver transacciones por ID cliente (GET): /transaccion/consultar/{idCliente}
+- Ver transacciones por ID cliente y tipo de transacción (GET): /transaccion/consultar/{idCliente}/{tipoTransaccion}
