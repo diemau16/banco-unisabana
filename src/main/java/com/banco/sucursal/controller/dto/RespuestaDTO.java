@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class RespuestaDTO {
-    String respuesta;
+    private String respuesta;
 
     public RespuestaDTO(String respuesta) {
         this.respuesta = respuesta;
