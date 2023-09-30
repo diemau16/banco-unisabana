@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "fd593452-50ac-43fc-b09c-db9941ef8b63",
+		"name": "Producto",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29524103"
+	},
+	"item": [
+		{
+			"name": "Obtener Producto",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/estudiante/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"estudiante",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Producto por cliente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/estudiante/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"estudiante",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Producto por IdProducto",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/estudiante/6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"estudiante",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Producto Agregar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "   {\r\n        \"idCliente\": 7,\r\n        \"tipoProducto\": 1\r\n    }\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/producto/agregar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"producto",
+						"agregar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Desactivar producto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cliente/desactivar/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cliente",
+						"desactivar",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Activar producto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cliente/desactivar/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cliente",
+						"desactivar",
+						"7"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
