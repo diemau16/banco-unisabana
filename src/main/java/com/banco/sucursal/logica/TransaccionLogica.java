@@ -16,12 +16,12 @@ public class TransaccionLogica {
     private ClienteLogica clienteLogica;
     private ProductoLogica productoLogica;
     Transaccion transaccionBD = new Transaccion();
-    private int tipoTransaccion;
+    public int tipoTransaccion;
     private int idClienteOrigen;
     private int idProductoOrigen;
     private int idClienteDestino;
     private int idProductoDestino;
-    private float monto;
+    public float monto;
 
     public TransaccionLogica(TransaccionRepository transaccionRepository, ClienteLogica clienteLogica, ProductoLogica productoLogica) {
         this.transaccionRepository = transaccionRepository;
