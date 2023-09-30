@@ -70,23 +70,23 @@ class TransaccionLogicaTest {
     @Test
     void Dado_idCliente_Cuando_obtenerTransaccionesPorIdCliente_Entonces_listarTransaccionesDelCliente() {
         List<Transaccion> listaTransacciones = new ArrayList<>();
-        Transaccion transaccion1 = new Transaccion();
-        transaccion1.setIdTransaccion(1);
-        transaccion1.setIdClienteOrigen(1);
-        transaccion1.setIdClienteDestino(2);
-        listaTransacciones.add(transaccion1);
+        Transaccion primeraTransaccion = new Transaccion();
+        primeraTransaccion.setIdTransaccion(1);
+        primeraTransaccion.setIdClienteOrigen(1);
+        primeraTransaccion.setIdClienteDestino(2);
+        listaTransacciones.add(primeraTransaccion);
 
-        Transaccion transaccion2 = new Transaccion();
-        transaccion2.setIdTransaccion(2);
-        transaccion2.setIdClienteOrigen(2);
-        transaccion2.setIdClienteDestino(1);
-        listaTransacciones.add(transaccion2);
+        Transaccion segundaTransaccion = new Transaccion();
+        segundaTransaccion.setIdTransaccion(2);
+        segundaTransaccion.setIdClienteOrigen(2);
+        segundaTransaccion.setIdClienteDestino(1);
+        listaTransacciones.add(segundaTransaccion);
 
-        Transaccion transaccion3 = new Transaccion();
-        transaccion3.setIdTransaccion(3);
-        transaccion3.setIdClienteOrigen(3);
-        transaccion3.setIdClienteDestino(4);
-        listaTransacciones.add(transaccion3);
+        Transaccion terceraTransaccion = new Transaccion();
+        terceraTransaccion.setIdTransaccion(3);
+        terceraTransaccion.setIdClienteOrigen(3);
+        terceraTransaccion.setIdClienteDestino(4);
+        listaTransacciones.add(terceraTransaccion);
 
         when(repository.findAll()).thenReturn(listaTransacciones);
 
@@ -94,9 +94,9 @@ class TransaccionLogicaTest {
 
         assertNotNull(listaTransaccionesObtenidas);
         assertEquals(2, listaTransaccionesObtenidas.size());
-        assertTrue(listaTransaccionesObtenidas.contains(transaccion1));
-        assertTrue(listaTransaccionesObtenidas.contains(transaccion2));
-        assertFalse(listaTransaccionesObtenidas.contains(transaccion3));
+        assertTrue(listaTransaccionesObtenidas.contains(primeraTransaccion));
+        assertTrue(listaTransaccionesObtenidas.contains(segundaTransaccion));
+        assertFalse(listaTransaccionesObtenidas.contains(terceraTransaccion));
     }
 
     @Test
@@ -139,7 +139,7 @@ class TransaccionLogicaTest {
     }
 
     @Test
-    void CuandoGuardarTransaccionTransferencia_EntoncesGuardaLaTransaccionn() {
+    void Cuando_guardarTransferencia_Entonces_guardarTransaccion() {
         Transaccion transaccionSimulada = new Transaccion();
         transaccionSimulada.setIdTransaccion(1);
         transaccionSimulada.setHoraTransaccion(LocalDateTime.now());
@@ -156,7 +156,7 @@ class TransaccionLogicaTest {
     }
 
     @Test
-    void CuandoGuardarTransaccionDeposito_EntoncesGuardaLaTransaccion() {
+    void Cuando_guardarDeposito_Entonces_guardarTransaccion() {
         Transaccion transaccionSimulada = new Transaccion();
         transaccionSimulada.setIdTransaccion(2);
         transaccionSimulada.setHoraTransaccion(LocalDateTime.now());
@@ -173,7 +173,7 @@ class TransaccionLogicaTest {
     }
 
     @Test
-    void CuandoGuardarTransaccionRetiro_EntoncesGuardaLaTransaccion() {
+    void Cuando_guardarRetiro_Entonces_guardarTransaccion() {
         Transaccion transaccionSimulada = new Transaccion();
         transaccionSimulada.setIdTransaccion(3);
         transaccionSimulada.setHoraTransaccion(LocalDateTime.now());
@@ -285,6 +285,34 @@ class TransaccionLogicaTest {
     }
 
     @Test
-    void realizarTransaccion() {
+    void Dado_datosDeProductos_Cuando_transferencia_Entonces_realizarTransferencia() {
+        logica.monto = 300;
+        logica.idClienteOrigen = 0;
+        logica.idClienteDestino = 1;
+        logica.idProductoOrigen = 0;
+        logica.idProductoDestino = 1;
+
+        Producto productoOrigen = new Producto();
+        productoOrigen.setIdProducto(logica.idProductoOrigen);
+        productoOrigen.setIdCliente(logica.idClienteOrigen);
+        productoOrigen.setSaldoProducto(logica.monto);
+
+        Producto productoDestino = new Producto();
+        productoDestino.setIdProducto(logica.idProductoDestino);
+        productoDestino.setIdCliente(logica.idClienteDestino);
+        productoDestino.setSaldoProducto(logica.monto);
+
+        when(clienteLogica.existeCliente(logica.idClienteOrigen)).thenReturn(true);
+        when(productoLogica.existeProducto(logica.idProductoOrigen)).thenReturn(true);
+        when(productoLogica.existeProducto(logica.idProductoDestino)).thenReturn(true);
+        when(productoLogica.encontrarProducto(logica.idProductoOrigen)).thenReturn(productoOrigen);
+        when(productoLogica.encontrarProducto(logica.idProductoDestino)).thenReturn(productoDestino);
+
+        logica.transferencia();
+
+        assertEquals(0, productoOrigen.getSaldoProducto());
+        assertEquals(600, productoDestino.getSaldoProducto());
+        verify(productoLogica, times(1)).guardarBD(productoOrigen);
+        verify(productoLogica, times(1)).guardarBD(productoDestino);
     }
 }

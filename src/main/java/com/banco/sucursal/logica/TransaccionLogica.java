@@ -17,10 +17,10 @@ public class TransaccionLogica {
     private ProductoLogica productoLogica;
     Transaccion transaccionBD = new Transaccion();
     public int tipoTransaccion;
-    private int idClienteOrigen;
-    private int idProductoOrigen;
-    private int idClienteDestino;
-    private int idProductoDestino;
+    public int idClienteOrigen;
+    public int idProductoOrigen;
+    public int idClienteDestino;
+    public int idProductoDestino;
     public float monto;
 
     public TransaccionLogica(TransaccionRepository transaccionRepository, ClienteLogica clienteLogica, ProductoLogica productoLogica) {
