@@ -351,4 +351,25 @@ class TransaccionLogicaTest {
             logica.deposito();
         });
     }
+
+    @Test
+    void Dado_datosDeProducto_Cuando_retiro_Entonces_realizarRetiro() {
+        logica.monto = 300;
+        logica.idClienteOrigen = 0;
+        logica.idProductoOrigen = 0;
+
+        Producto productoOrigen = new Producto();
+        productoOrigen.setIdProducto(logica.idProductoOrigen);
+        productoOrigen.setIdCliente(logica.idClienteOrigen);
+        productoOrigen.setSaldoProducto(logica.monto);
+
+        when(clienteLogica.existeCliente(logica.idClienteOrigen)).thenReturn(true);
+        when(productoLogica.existeProducto(logica.idProductoOrigen)).thenReturn(true);
+        when(productoLogica.encontrarProducto(logica.idProductoOrigen)).thenReturn(productoOrigen);
+
+        logica.retiro();
+
+        assertEquals(0, productoOrigen.getSaldoProducto());
+        verify(productoLogica, times(1)).guardarBD(productoOrigen);
+    }
 }
