@@ -27,7 +27,7 @@ public class ProductoLogica {
                 return producto;
             }
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe el cliente.");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No existe el producto.");
     }
 
     public boolean existeProducto(int idProducto) {
@@ -44,7 +44,7 @@ public class ProductoLogica {
         productoRepository.save(producto);
     }
 
-    private boolean verificarCliente(int idCliente) {
+    public boolean verificarCliente(int idCliente) {
         if (clienteLogica.existeCliente(idCliente)) {
             return true;
         } else {
@@ -52,7 +52,7 @@ public class ProductoLogica {
         }
     }
 
-    private boolean verificarTipoProducto(int tipoProducto) {
+    public boolean verificarTipoProducto(int tipoProducto) {
         if (tipoProducto >= 1 && tipoProducto <= 4) {
             return true;
         } else {
