@@ -249,6 +249,40 @@ class TransaccionLogicaTest {
             logica.verificarDestino();
         });
     }
+    @Test
+    void Dado_montoInvalido_Cuando_verificarMonto_Entonces_lanzarExcepcion(){
+        logica.monto = 0;
+        assertThrows(IllegalArgumentException.class, () -> {
+            logica.verificarMonto();
+        });
+    }
+
+    @Test
+    void Dado_montoInsuficiente_Cuando_verificarMonto_Entonces_lanzarExcepcion() {
+        logica.monto = 150;
+        int saldoProductoOrigen = 100;
+        Producto productoSimulado = new Producto();
+        productoSimulado.setSaldoProducto(saldoProductoOrigen);
+
+        when(productoLogica.encontrarProducto(0))
+                .thenReturn(productoSimulado);
+        assertThrows(IllegalArgumentException.class, () -> {
+            logica.verificarMonto();
+        });
+    }
+
+    @Test
+    void Dado_montoSuficiente_Cuando_verificarMonto_Entonces_retornarVerdadero() {
+        logica.monto = 150;
+        int saldoProductoOrigen = 200;
+        Producto productoSimulado = new Producto();
+        productoSimulado.setSaldoProducto(saldoProductoOrigen);
+
+        when(productoLogica.encontrarProducto(0))
+                .thenReturn(productoSimulado);
+        boolean resultado = logica.verificarMonto();
+        assertTrue(resultado);
+    }
 
     @Test
     void realizarTransaccion() {
