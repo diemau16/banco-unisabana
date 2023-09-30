@@ -1,5 +1,6 @@
 package com.banco.sucursal.unit.logica;
 
+import com.banco.sucursal.controller.dto.TransaccionDTO;
 import com.banco.sucursal.logica.ClienteLogica;
 import com.banco.sucursal.logica.ProductoLogica;
 import com.banco.sucursal.logica.TransaccionLogica;
@@ -370,5 +371,108 @@ class TransaccionLogicaTest {
 
         assertEquals(0, productoOrigen.getSaldoProducto());
         verify(productoLogica, times(1)).guardarBD(productoOrigen);
+    }
+
+    @Test
+    void Dado_tipoTransaccionTransferencia_Cuando_ejecutarTransaccion_Entonces_realizarTransferencia(){
+        logica.tipoTransaccion = 1;
+        logica.idClienteOrigen = 0;
+        logica.idClienteDestino = 1;
+        logica.idProductoOrigen = 0;
+        logica.idProductoDestino = 1;
+        logica.monto = 300;
+
+        TransaccionDTO transaccionDTO = new TransaccionDTO(logica.tipoTransaccion, logica.idClienteOrigen, logica.idProductoOrigen, logica.idProductoDestino, logica.monto);
+
+        Producto productoOrigen = new Producto();
+        productoOrigen.setIdProducto(logica.idProductoOrigen);
+        productoOrigen.setIdCliente(logica.idClienteOrigen);
+        productoOrigen.setSaldoProducto(logica.monto);
+
+        Producto productoDestino = new Producto();
+        productoDestino.setIdProducto(logica.idProductoDestino);
+        productoDestino.setIdCliente(logica.idClienteDestino);
+        productoDestino.setSaldoProducto(logica.monto);
+
+        when(clienteLogica.existeCliente(logica.idClienteOrigen)).thenReturn(true);
+        when(productoLogica.existeProducto(logica.idProductoOrigen)).thenReturn(true);
+        when(productoLogica.existeProducto(logica.idProductoDestino)).thenReturn(true);
+        when(productoLogica.encontrarProducto(logica.idProductoOrigen)).thenReturn(productoOrigen);
+        when(productoLogica.encontrarProducto(logica.idProductoDestino)).thenReturn(productoDestino);
+
+        logica.realizarTransaccion(transaccionDTO);
+
+        assertEquals(1, transaccionDTO.getTipoTransaccion());
+        assertEquals(0, transaccionDTO.getIdClienteOrigen());
+        assertEquals(0, transaccionDTO.getIdProductoOrigen());
+        assertEquals(1, transaccionDTO.getIdProductoDestino());
+    }
+
+    @Test
+    void Dado_tipoTransaccionDeposito_Cuando_ejecutarTransaccion_Entonces_realizarDeposito(){
+        logica.tipoTransaccion = 2;
+        logica.idClienteOrigen = 0;
+        logica.idClienteDestino = 1;
+        logica.idProductoOrigen = 0;
+        logica.idProductoDestino = 1;
+        logica.monto = 300;
+
+        TransaccionDTO transaccionDTO = new TransaccionDTO(logica.tipoTransaccion, logica.idClienteOrigen, logica.idProductoOrigen, logica.idProductoDestino, logica.monto);
+
+        Producto productoDestino = new Producto();
+        productoDestino.setIdProducto(logica.idProductoDestino);
+        productoDestino.setIdCliente(logica.idClienteDestino);
+        productoDestino.setSaldoProducto(logica.monto);
+
+        when(productoLogica.existeProducto(logica.idProductoDestino)).thenReturn(true);
+        when(productoLogica.encontrarProducto(logica.idProductoDestino)).thenReturn(productoDestino);
+
+        logica.realizarTransaccion(transaccionDTO);
+
+        assertEquals(2, transaccionDTO.getTipoTransaccion());
+        assertEquals(1, transaccionDTO.getIdProductoDestino());
+    }
+
+    @Test
+    void Dado_tipoTransaccionRetiro_Cuando_ejecutarTransaccion_Entonces_realizarRetiro(){
+        logica.tipoTransaccion = 3;
+        logica.idClienteOrigen = 0;
+        logica.idClienteDestino = 1;
+        logica.idProductoOrigen = 0;
+        logica.idProductoDestino = 1;
+        logica.monto = 300;
+
+        TransaccionDTO transaccionDTO = new TransaccionDTO(logica.tipoTransaccion, logica.idClienteOrigen, logica.idProductoOrigen, logica.idProductoDestino, logica.monto);
+
+        Producto productoOrigen = new Producto();
+        productoOrigen.setIdProducto(logica.idProductoOrigen);
+        productoOrigen.setIdCliente(logica.idClienteOrigen);
+        productoOrigen.setSaldoProducto(logica.monto);
+
+        when(clienteLogica.existeCliente(logica.idClienteOrigen)).thenReturn(true);
+        when(productoLogica.existeProducto(logica.idProductoOrigen)).thenReturn(true);
+        when(productoLogica.encontrarProducto(logica.idProductoOrigen)).thenReturn(productoOrigen);
+
+        logica.realizarTransaccion(transaccionDTO);
+
+        assertEquals(3, transaccionDTO.getTipoTransaccion());
+        assertEquals(0, transaccionDTO.getIdClienteOrigen());
+        assertEquals(0, transaccionDTO.getIdProductoOrigen());
+    }
+
+    @Test
+    void Dado_tipoTransaccionInvalido_Cuando_ejecutarTransaccion_Entonces_lanzarExcepcion(){
+        logica.tipoTransaccion = 0;
+        logica.idClienteOrigen = 0;
+        logica.idClienteDestino = 1;
+        logica.idProductoOrigen = 0;
+        logica.idProductoDestino = 1;
+        logica.monto = 300;
+
+        TransaccionDTO transaccionDTO = new TransaccionDTO(logica.tipoTransaccion, logica.idClienteOrigen, logica.idProductoOrigen, logica.idProductoDestino, logica.monto);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            logica.realizarTransaccion(transaccionDTO);
+        });
     }
 }
