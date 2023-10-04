@@ -34,16 +34,6 @@ public class ClienteController {
         return clienteLogica.obtenerClientePorId(idCliente);
     }
 
-    @PutMapping(path = "/cliente/desactivar/{idCliente}")
-    public ResponseEntity<RespuestaDTO> desactivarCliente(@PathVariable int idCliente) {
-        try {
-            clienteLogica.desactivarCliente(idCliente);
-            return ResponseEntity.ok(new RespuestaDTO("Desactivado correctamente."));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(new RespuestaDTO("Cliente no se pudo desactivar: " + e.getMessage()));
-        }
-    }
-
     @PutMapping(path = "/cliente/activar/{idCliente}")
     public ResponseEntity<RespuestaDTO> activarCliente(@PathVariable int idCliente) {
         try {
@@ -51,6 +41,16 @@ public class ClienteController {
             return ResponseEntity.ok(new RespuestaDTO("Activado correctamente."));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(new RespuestaDTO("Cliente no se pudo activar: " + e.getMessage()));
+        }
+    }
+
+    @PutMapping(path = "/cliente/desactivar/{idCliente}")
+    public ResponseEntity<RespuestaDTO> desactivarCliente(@PathVariable int idCliente) {
+        try {
+            clienteLogica.desactivarCliente(idCliente);
+            return ResponseEntity.ok(new RespuestaDTO("Desactivado correctamente."));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new RespuestaDTO("Cliente no se pudo desactivar: " + e.getMessage()));
         }
     }
 }

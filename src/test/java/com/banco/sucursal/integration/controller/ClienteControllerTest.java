@@ -50,7 +50,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    void dadoClientes_alObtenerClientes_entoncesDevuelveListaEstudiantes() {
+    void dadoClientes_alObtenerClientes_entoncesDevuelveListaClientes() {
         // Given
         List<Cliente> clientes = new ArrayList<>();
         Cliente cliente1 = new Cliente();
@@ -81,6 +81,35 @@ class ClienteControllerTest {
         assertEquals("Luis", clientesResponse[1].getNombres());
         assertEquals("Rodriguez", clientesResponse[1].getApellidos());
         assertEquals(20, clientesResponse[1].getEdad());
+    }
+
+    @Test
+    void dadoClientes_alObtenerClientePorId_entoncesDevuelveClienteConId() {
+        // Given
+        List<Cliente> clientes = new ArrayList<>();
+        Cliente cliente1 = new Cliente();
+        cliente1.setActivo(true);
+        cliente1.setNombres("Juan");
+        cliente1.setApellidos("Garcia");
+        cliente1.setEdad(20);
+        clientes.add(cliente1);
+        Cliente cliente2 = new Cliente();
+        cliente2.setActivo(true);
+        cliente2.setNombres("Luis");
+        cliente2.setApellidos("Rodriguez");
+        cliente2.setEdad(20);
+        clientes.add(cliente2);
+        clienteRepository.saveAll(clientes);
+        // When
+        ResponseEntity<Cliente> responseEntity = restTemplate.getForEntity("/cliente/obtener/1", Cliente.class);
+        // Then
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Cliente clienteResponse = responseEntity.getBody();
+        assert clienteResponse != null;
+        assertTrue(clienteResponse.isActivo());
+        assertEquals("Juan", clienteResponse.getNombres());
+        assertEquals("Garcia", clienteResponse.getApellidos());
+        assertEquals(20, clienteResponse.getEdad());
     }
 
     @Test
