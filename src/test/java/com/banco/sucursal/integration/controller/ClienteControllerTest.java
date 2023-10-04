@@ -79,7 +79,7 @@ class ClienteControllerTest {
     }
 
     @Test
-    void dadoClienteDesactivado_alActivar_entonces_cambiaEstadoActivoATrue() {
+    void dadoClienteDesactivado_alActivar_entoncesCambiaEstadoActivoATrue() {
         // Given
         Cliente cliente = new Cliente();
         cliente.setActivo(false);
@@ -96,5 +96,25 @@ class ClienteControllerTest {
         assertEquals("Activado correctamente.", respuesta.getRespuesta());
         Cliente clienteActualizado = clienteRepository.findById(cliente.getIdCliente()).orElse(null);
         assertTrue(clienteActualizado.isActivo());
+    }
+
+    @Test
+    void dadoClienteActivo_alDesactivar_entoncesCambiaEstadoActivoAFalse() {
+        // Given
+        Cliente cliente = new Cliente();
+        cliente.setActivo(true);
+        cliente.setNombres("A");
+        cliente.setApellidos("A");
+        cliente.setEdad(20);
+        clienteRepository.save(cliente);
+        // When
+        HttpEntity<Void> requestEntity = new HttpEntity<>(null);
+        ResponseEntity<RespuestaDTO> responseEntity = restTemplate.exchange("/cliente/desactivar/" + cliente.getIdCliente(), HttpMethod.PUT, requestEntity, RespuestaDTO.class);
+        // Then
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        RespuestaDTO respuesta = responseEntity.getBody();
+        assertEquals("Desactivado correctamente.", respuesta.getRespuesta());
+        Cliente clienteActualizado = clienteRepository.findById(cliente.getIdCliente()).orElse(null);
+        assertFalse(clienteActualizado.isActivo());
     }
 }

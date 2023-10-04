@@ -35,12 +35,12 @@ public class ClienteController {
     }
 
     @PutMapping(path = "/cliente/desactivar/{idCliente}")
-    public RespuestaDTO desactivarCliente(@PathVariable int idCliente) {
+    public ResponseEntity<RespuestaDTO> desactivarCliente(@PathVariable int idCliente) {
         try {
             clienteLogica.desactivarCliente(idCliente);
-            return new RespuestaDTO("Desactivado correctamente.");
+            return ResponseEntity.ok(new RespuestaDTO("Desactivado correctamente."));
         } catch (IllegalArgumentException e) {
-            return new RespuestaDTO("Cliente no se pudo desactivar: " + e.getMessage());
+            return ResponseEntity.badRequest().body(new RespuestaDTO("Cliente no se pudo desactivar: " + e.getMessage()));
         }
     }
 
