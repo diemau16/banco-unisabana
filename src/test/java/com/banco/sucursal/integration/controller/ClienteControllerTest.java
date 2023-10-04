@@ -35,13 +35,18 @@ class ClienteControllerTest {
     private ClienteRepository clienteRepository;
 
     @Test
-    void alAgregarClienteEntoncesDevuelveRespuestaExitosa() {
-        // given
+    void alAgregarCliente_entoncesDevuelveRespuestaExitosaYGuardaCliente() {
+        // Given
         ClienteDTO clienteDTO = new ClienteDTO("Carlos", "Gomez", 43);
-        // when
-        ResponseEntity<RespuestaDTO> respuesta = restTemplate.postForEntity("/cliente/agregar", clienteDTO, RespuestaDTO.class);
-        // then
-        assertEquals("Cliente creado correctamente.", respuesta.getBody().getRespuesta());
+        // When
+        ResponseEntity<RespuestaDTO> responseEntity = restTemplate.postForEntity("/cliente/agregar", clienteDTO, RespuestaDTO.class);
+        // Then
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("Cliente creado correctamente.", responseEntity.getBody().getRespuesta());
+        Cliente clienteGuardado = clienteRepository.findById(1).orElse(null);
+        assertEquals("Carlos", clienteGuardado.getNombres());
+        assertEquals("Gomez", clienteGuardado.getApellidos());
+        assertEquals(43, clienteGuardado.getEdad());
     }
 
     @Test
@@ -92,8 +97,7 @@ class ClienteControllerTest {
         ResponseEntity<RespuestaDTO> responseEntity = restTemplate.exchange("/cliente/activar/" + cliente.getIdCliente(), HttpMethod.PUT, requestEntity, RespuestaDTO.class);
         // Then
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        RespuestaDTO respuesta = responseEntity.getBody();
-        assertEquals("Activado correctamente.", respuesta.getRespuesta());
+        assertEquals("Activado correctamente.", responseEntity.getBody().getRespuesta());
         Cliente clienteActualizado = clienteRepository.findById(cliente.getIdCliente()).orElse(null);
         assertTrue(clienteActualizado.isActivo());
     }
@@ -112,8 +116,7 @@ class ClienteControllerTest {
         ResponseEntity<RespuestaDTO> responseEntity = restTemplate.exchange("/cliente/desactivar/" + cliente.getIdCliente(), HttpMethod.PUT, requestEntity, RespuestaDTO.class);
         // Then
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        RespuestaDTO respuesta = responseEntity.getBody();
-        assertEquals("Desactivado correctamente.", respuesta.getRespuesta());
+        assertEquals("Desactivado correctamente.", responseEntity.getBody().getRespuesta());
         Cliente clienteActualizado = clienteRepository.findById(cliente.getIdCliente()).orElse(null);
         assertFalse(clienteActualizado.isActivo());
     }
