@@ -2,14 +2,20 @@ package com.banco.sucursal.integration;
 
 import com.banco.sucursal.controller.dto.ClienteDTO;
 import com.banco.sucursal.controller.dto.RespuestaDTO;
+import com.banco.sucursal.persistencia.Cliente;
+import com.banco.sucursal.persistencia.ClienteRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,10 +27,50 @@ class ClienteControllerTest {
     @Autowired
     TestRestTemplate restTemplate;
 
+    @Autowired
+    private ClienteRepository clienteRepository;
+
     @Test
     void alAgregarClienteEntoncesDevuelveRespuestaExitosa() {
+        // given
         ClienteDTO clienteDTO = new ClienteDTO("Carlos", "Gomez", 43);
+        // when
         ResponseEntity<RespuestaDTO> respuesta = restTemplate.postForEntity("/cliente/agregar", clienteDTO, RespuestaDTO.class);
+        // then
         assertEquals("Cliente creado correctamente.", respuesta.getBody().getRespuesta());
+    }
+
+    @Test
+    void dadoClientes_alObtenerClientes_entoncesDevuelveListaEstudiantes() {
+        // given
+        List<Cliente> clientes = new ArrayList<>();
+        Cliente cliente1 = new Cliente();
+        cliente1.setActivo(true);
+        cliente1.setNombres("Juan");
+        cliente1.setApellidos("Garcia");
+        cliente1.setEdad(20);
+        clientes.add(cliente1);
+        Cliente cliente2 = new Cliente();
+        cliente2.setActivo(true);
+        cliente2.setNombres("Luis");
+        cliente2.setApellidos("Rodriguez");
+        cliente2.setEdad(20);
+        clientes.add(cliente2);
+        clienteRepository.saveAll(clientes);
+        // when
+        ResponseEntity<Cliente[]> responseEntity = restTemplate.getForEntity("/cliente/obtener", Cliente[].class);
+        // then
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        Cliente[] clientesResponse = responseEntity.getBody();
+        assert clientesResponse != null;
+        assertEquals(2, clientesResponse.length);
+        assertTrue(clientesResponse[0].isActivo());
+        assertEquals("Juan", clientesResponse[0].getNombres());
+        assertEquals("Garcia", clientesResponse[0].getApellidos());
+        assertEquals(20, clientesResponse[0].getEdad());
+        assertTrue(clientesResponse[1].isActivo());
+        assertEquals("Luis", clientesResponse[1].getNombres());
+        assertEquals("Rodriguez", clientesResponse[1].getApellidos());
+        assertEquals(20, clientesResponse[1].getEdad());
     }
 }
