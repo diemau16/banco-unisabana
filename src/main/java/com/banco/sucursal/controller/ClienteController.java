@@ -4,6 +4,7 @@ import com.banco.sucursal.controller.dto.ClienteDTO;
 import com.banco.sucursal.controller.dto.RespuestaDTO;
 import com.banco.sucursal.logica.ClienteLogica;
 import com.banco.sucursal.persistencia.Cliente;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,12 +45,12 @@ public class ClienteController {
     }
 
     @PutMapping(path = "/cliente/activar/{idCliente}")
-    public RespuestaDTO activarCliente(@PathVariable int idCliente) {
+    public ResponseEntity<RespuestaDTO> activarCliente(@PathVariable int idCliente) {
         try {
             clienteLogica.activarCliente(idCliente);
-            return new RespuestaDTO("Activado correctamente.");
+            return ResponseEntity.ok(new RespuestaDTO("Activado correctamente."));
         } catch (IllegalArgumentException e) {
-            return new RespuestaDTO("Cliente no se pudo activar: " + e.getMessage());
+            return ResponseEntity.badRequest().body(new RespuestaDTO("Cliente no se pudo activar: " + e.getMessage()));
         }
     }
 }

@@ -9,6 +9,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
@@ -44,7 +46,7 @@ class ClienteControllerTest {
 
     @Test
     void dadoClientes_alObtenerClientes_entoncesDevuelveListaEstudiantes() {
-        // given
+        // Given
         List<Cliente> clientes = new ArrayList<>();
         Cliente cliente1 = new Cliente();
         cliente1.setActivo(true);
@@ -59,9 +61,9 @@ class ClienteControllerTest {
         cliente2.setEdad(20);
         clientes.add(cliente2);
         clienteRepository.saveAll(clientes);
-        // when
+        // When
         ResponseEntity<Cliente[]> responseEntity = restTemplate.getForEntity("/cliente/obtener", Cliente[].class);
-        // then
+        // Then
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Cliente[] clientesResponse = responseEntity.getBody();
         assert clientesResponse != null;
@@ -74,5 +76,25 @@ class ClienteControllerTest {
         assertEquals("Luis", clientesResponse[1].getNombres());
         assertEquals("Rodriguez", clientesResponse[1].getApellidos());
         assertEquals(20, clientesResponse[1].getEdad());
+    }
+
+    @Test
+    void dadoClienteDesactivado_alActivar_entonces_cambiaEstadoActivoATrue() {
+        // Given
+        Cliente cliente = new Cliente();
+        cliente.setActivo(false);
+        cliente.setNombres("A");
+        cliente.setApellidos("A");
+        cliente.setEdad(20);
+        clienteRepository.save(cliente);
+        // When
+        HttpEntity<Void> requestEntity = new HttpEntity<>(null);
+        ResponseEntity<RespuestaDTO> responseEntity = restTemplate.exchange("/cliente/activar/" + cliente.getIdCliente(), HttpMethod.PUT, requestEntity, RespuestaDTO.class);
+        // Then
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        RespuestaDTO respuesta = responseEntity.getBody();
+        assertEquals("Activado correctamente.", respuesta.getRespuesta());
+        Cliente clienteActualizado = clienteRepository.findById(cliente.getIdCliente()).orElse(null);
+        assertTrue(clienteActualizado.isActivo());
     }
 }
