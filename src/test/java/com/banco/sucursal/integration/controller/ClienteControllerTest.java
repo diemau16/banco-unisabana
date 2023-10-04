@@ -1,4 +1,4 @@
-package com.banco.sucursal.integration;
+package com.banco.sucursal.integration.controller;
 
 import com.banco.sucursal.controller.dto.ClienteDTO;
 import com.banco.sucursal.controller.dto.RespuestaDTO;
