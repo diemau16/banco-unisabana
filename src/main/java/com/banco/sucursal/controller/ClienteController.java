@@ -4,6 +4,7 @@ import com.banco.sucursal.controller.dto.ClienteDTO;
 import com.banco.sucursal.controller.dto.RespuestaDTO;
 import com.banco.sucursal.logica.ClienteLogica;
 import com.banco.sucursal.persistencia.Cliente;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,23 +34,23 @@ public class ClienteController {
         return clienteLogica.obtenerClientePorId(idCliente);
     }
 
-    @PutMapping(path = "/cliente/desactivar/{idCliente}")
-    public RespuestaDTO desactivarCliente(@PathVariable int idCliente) {
+    @PutMapping(path = "/cliente/activar/{idCliente}")
+    public ResponseEntity<RespuestaDTO> activarCliente(@PathVariable int idCliente) {
         try {
-            clienteLogica.desactivarCliente(idCliente);
-            return new RespuestaDTO("Desactivado correctamente.");
+            clienteLogica.activarCliente(idCliente);
+            return ResponseEntity.ok(new RespuestaDTO("Activado correctamente."));
         } catch (IllegalArgumentException e) {
-            return new RespuestaDTO("Cliente no se pudo desactivar: " + e.getMessage());
+            return ResponseEntity.badRequest().body(new RespuestaDTO("Cliente no se pudo activar: " + e.getMessage()));
         }
     }
 
-    @PutMapping(path = "/cliente/activar/{idCliente}")
-    public RespuestaDTO activarCliente(@PathVariable int idCliente) {
+    @PutMapping(path = "/cliente/desactivar/{idCliente}")
+    public ResponseEntity<RespuestaDTO> desactivarCliente(@PathVariable int idCliente) {
         try {
-            clienteLogica.activarCliente(idCliente);
-            return new RespuestaDTO("Activado correctamente.");
+            clienteLogica.desactivarCliente(idCliente);
+            return ResponseEntity.ok(new RespuestaDTO("Desactivado correctamente."));
         } catch (IllegalArgumentException e) {
-            return new RespuestaDTO("Cliente no se pudo activar: " + e.getMessage());
+            return ResponseEntity.badRequest().body(new RespuestaDTO("Cliente no se pudo desactivar: " + e.getMessage()));
         }
     }
 }
