@@ -13,4 +13,7 @@ public class ClienteDTO {
         this.apellidos = apellidos;
         this.edad = edad;
     }
+
+    public ClienteDTO() {
+    }
 }
