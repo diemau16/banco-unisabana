@@ -1,4 +1,4 @@
-# Rest API de un banco
+# Banco Unisabana
 
 ## Integrantes del equipo
 
@@ -36,6 +36,15 @@ Puedes utilizar el proyecto de las siguientes formas:
 - Accediendo a la API a través de Postman, para poder hacer peticiones HTTP.
 - Ingresando la URL "localhost:8081/*", donde podrás hacer peticiones mediante PathVariable, pero no podrás hacer peticiones PUT y POST que utilizan RequestBody.
 - Ingresando a Swagger a través del siguiente link "http://localhost:8081/swagger-ui/index.html#/", donde podrás ejecutar las peticiones igual que en Postman, pero de una manera más organizada y con las estructuras preestablecidas.
+
+### Autenticación
+
+La aplicación cuenta con el método de seguridad Basic Authentication, el cual solicitará un usuario y contraseña para interactuar con la API.
+
+Las siguientes son las credenciales utilizadas:
+
+- Usuario: admin
+- Contraseña: admin1234
 
 ### Endpoints de la API:
 
