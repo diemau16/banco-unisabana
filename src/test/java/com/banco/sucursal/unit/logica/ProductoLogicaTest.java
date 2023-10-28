@@ -223,7 +223,6 @@ class ProductoLogicaTest {
         producto.setActivo(true);
         logica.guardarBD(producto);
         verify(repository, times(1)).save(producto);
-        assertNotNull(producto.getIdProducto());
         assertTrue(producto.getIdProducto() > 0);
         assertEquals(1, producto.getIdCliente());
         assertEquals(100, producto.getSaldoProducto());
