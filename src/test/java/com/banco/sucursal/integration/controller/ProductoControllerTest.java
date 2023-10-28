@@ -89,7 +89,7 @@ class ProductoControllerTest {
         // Then
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Producto[] productosResponse = responseEntity.getBody();
-        assert productosResponse != null;
+        assertNotNull(productosResponse);
         assertEquals(2, productosResponse.length);
         assertEquals(1, productosResponse[0].getIdCliente());
         assertTrue(productosResponse[0].isActivo());
@@ -147,7 +147,7 @@ class ProductoControllerTest {
         // Then
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Producto[] productosResponse = responseEntity.getBody();
-        assert productosResponse != null;
+        assertNotNull(productosResponse);
         assertEquals(2, productosResponse.length);
         assertEquals(2, productosResponse[0].getIdCliente());
         assertTrue(productosResponse[0].isActivo());
@@ -187,7 +187,7 @@ class ProductoControllerTest {
         // Then
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Producto productoResponse = responseEntity.getBody();
-        assert productoResponse != null;
+        assertNotNull(productoResponse);
         assertEquals(1, productoResponse.getIdCliente());
         assertTrue(productoResponse.isActivo());
         assertEquals(2, productoResponse.getTipoProducto());

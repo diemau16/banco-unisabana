@@ -71,7 +71,7 @@ class ClienteControllerTest {
         // Then
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Cliente[] clientesResponse = responseEntity.getBody();
-        assert clientesResponse != null;
+        assertNotNull(clientesResponse);
         assertEquals(2, clientesResponse.length);
         assertTrue(clientesResponse[0].isActivo());
         assertEquals("Juan", clientesResponse[0].getNombres());
@@ -105,7 +105,7 @@ class ClienteControllerTest {
         // Then
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         Cliente clienteResponse = responseEntity.getBody();
-        assert clienteResponse != null;
+        assertNotNull(clienteResponse);
         assertTrue(clienteResponse.isActivo());
         assertEquals("Juan", clienteResponse.getNombres());
         assertEquals("Garcia", clienteResponse.getApellidos());
