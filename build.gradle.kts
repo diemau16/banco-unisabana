@@ -4,6 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     id("org.springdoc.openapi-gradle-plugin") version "1.7.0"
     jacoco
+    id ("info.solidsoft.pitest") version "1.15.0"
     id("org.sonarqube") version "4.4.1.3373"
 }
 
@@ -58,6 +59,11 @@ tasks.jacocoTestReport {
 
 jacoco {
     toolVersion = "0.8.8"
+}
+
+pitest{
+    junit5PluginVersion.set("1.2.1")
+
 }
 
 tasks.sonarqube {
