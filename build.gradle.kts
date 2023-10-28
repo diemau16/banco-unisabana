@@ -4,6 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     id("org.springdoc.openapi-gradle-plugin") version "1.7.0"
     jacoco
+    id("org.sonarqube") version "4.4.1.3373"
 }
 
 group = "com.banco"
@@ -44,6 +45,7 @@ tasks.jacocoTestReport {
     dependsOn(tasks.test)
     reports {
         csv.required.set(true)
+        xml.required.set(true)
     }
     classDirectories.setFrom(
             files(classDirectories.files.map {
@@ -56,4 +58,16 @@ tasks.jacocoTestReport {
 
 jacoco {
     toolVersion = "0.8.8"
+}
+
+tasks.sonarqube {
+    dependsOn(tasks.jacocoTestReport)
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectName", "Banco Unisabana")
+        property("sonar.java.coveragePlugin", "jacoco")
+        property("sonar.junit.reportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
+    }
 }
