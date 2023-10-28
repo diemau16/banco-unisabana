@@ -37,16 +37,6 @@ public class ProductoController {
         return productoLogica.obtenerProductoPorIdProducto(idProducto);
     }
 
-    @PutMapping(path = "/producto/desactivar/{idProducto}")
-    public RespuestaDTO desactivarProducto(@PathVariable int idProducto) {
-        try {
-            productoLogica.desactivarProducto(idProducto);
-            return new RespuestaDTO("Producto desactivado correctamente.");
-        } catch (IllegalArgumentException e) {
-            return new RespuestaDTO("El producto no se pudo desactivar: " + e.getMessage());
-        }
-    }
-
     @PutMapping(path = "/producto/activar/{idProducto}")
     public RespuestaDTO activarProducto(@PathVariable int idProducto) {
         try {
@@ -54,6 +44,16 @@ public class ProductoController {
             return new RespuestaDTO("Producto activado correctamente.");
         } catch (IllegalArgumentException e) {
             return new RespuestaDTO("El producto no se pudo activar: " + e.getMessage());
+        }
+    }
+
+    @PutMapping(path = "/producto/desactivar/{idProducto}")
+    public RespuestaDTO desactivarProducto(@PathVariable int idProducto) {
+        try {
+            productoLogica.desactivarProducto(idProducto);
+            return new RespuestaDTO("Producto desactivado correctamente.");
+        } catch (IllegalArgumentException e) {
+            return new RespuestaDTO("El producto no se pudo desactivar: " + e.getMessage());
         }
     }
 }
