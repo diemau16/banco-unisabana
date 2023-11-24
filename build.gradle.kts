@@ -77,5 +77,6 @@ sonarqube {
         property("sonar.projectName", "Banco Unisabana")
         property("sonar.java.coveragePlugin", "jacoco")
         property("sonar.junit.reportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
+        property("sonar.coverage.exclusions", "**/com/banco/sucursal/persistencia/**, **/com/banco/sucursal/controller/dto/**")
     }
 }
