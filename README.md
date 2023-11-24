@@ -1,4 +1,4 @@
-# Banco Unisabana
+# Banco Unisabank
 
 ## Integrantes del equipo
 
@@ -29,10 +29,14 @@ El aplicativo contiene las funciones mencionadas a continuación:
 - Instalar Docker.
 - Ejecutar una terminal en la ubicación del proyecto.
 - Ejecutar el siguiente comando para crear la imagen con el archivo jar ubicado en la carpeta build/libs/ :
+
   docker build --build-arg JAR_FILE=build/libs/*.jar -t myorg/myapp .
+
   NOTA: En el nombre, "myorg" y "myapp" se pueden personalizar según se requiera.
 - Ejecutar el siguiente comando para iniciar la imagen en un contedor de Docker:
+
   docker run -p 8081:8081 myorg/myapp
+
   NOTA: Cambiar "myorg" y "myapp" por los nombres previamente asignados.
 - Probar desde el navegador el uso de la aplicación.
   
@@ -76,3 +80,7 @@ Los siguientes son los endpoints mediante los cuales se puede hacer uso de la AP
 - Ver todas las transacciones (GET): /transaccion/consultar
 - Ver transacciones por ID cliente (GET): /transaccion/consultar/{idCliente}
 - Ver transacciones por ID cliente y tipo de transacción (GET): /transaccion/consultar/{idCliente}/{tipoTransaccion}
+
+## Enlaces
+
+https://spring.io/guides/topicals/spring-boot-docker/
