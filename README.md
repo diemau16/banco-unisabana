@@ -8,25 +8,34 @@
 
 ## Funciones del Proyecto
 
-Las siguientes son las funciones con las que cuenta la aplicación:
-- Crear Cliente.
-- Interacturar con productos del banco(Tipo de cuenta de ahorros y tipo de tarjeta de credito).
-- Crear productos nuevos.
-- Consultar Saldo incluyendo consulta por producto.
-- Cambiar entre estados activo e inactivo de Cliente y Producto.
+El aplicativo contiene las funciones mencionadas a continuación:
+- Crear un cliente.
+- Interacturar con productos del banco (Tipo de cuenta de ahorros y tipo de tarjeta de credito).
+- Crear nuevos productos.
+- Consultar saldo incluyendo consulta por producto.
+- Cambiar entre estados activo e inactivo de cliente y producto.
 - Hacer transferencias entre cuentas, depósitos y retiros
-- Historial de de Transacciones incluyendo depositos, transferencias y retiros.
-- Transferencia de fondos perimite a los usuarios realizar transferencia de dinero entre sus propias cuentas o hacia cuenta de terceros.
+- Historial de de transacciones incluyendo depósitos, transferencias y retiros.
+- Movimiento de fondos que permite a los usuarios realizar transferencia de dinero entre sus propias cuentas o hacia cuenta de otros usuarios.
 
 ## Cómo se ejecuta
 
 ### Ejecutar el proyecto:
 
-- Debes tener instalados IntelliJ Idea y Java (preferiblemente 17).
-- Clona o descarga el repositorio desde GitHub, y colócalo en tu sistema.
-- Desde IntelliJ Idea, busca el proyecto y abre build.gradle.kts como proyecto.
-- Ve a build.gradle.kts y da clic en "Load script configurations".
-- Ejecuta el proyecto desde SucursalApplication
+- Instalar IntelliJ Idea y Java (preferiblemente 17).
+- Clonar o descargar el repositorio desde GitHub y colocarlo en el sistema local.
+- Buscar el proyecto desde IntelliJ Idea y abrir build.gradle.kts como un nuevo proyecto.
+- Ir a build.gradle.kts y dar clic en "Load script configurations".
+- Instalar Docker.
+- Ejecutar una terminal en la ubicación del proyecto.
+- Ejecutar el siguiente comando para crear la imagen con el archivo jar ubicado en la carpeta build/libs/ :
+  docker build --build-arg JAR_FILE=build/libs/*.jar -t myorg/myapp .
+  NOTA: En el nombre, "myorg" y "myapp" se pueden personalizar según se requiera.
+- Ejecutar el siguiente comando para iniciar la imagen en un contedor de Docker:
+  docker run -p 8081:8081 myorg/myapp
+  NOTA: Cambiar "myorg" y "myapp" por los nombres previamente asignados.
+- Probar desde el navegador el uso de la aplicación.
+  
 
 ### Uso de la aplicación:
 
@@ -35,7 +44,7 @@ La aplicación se ejecutará en el puerto 8081 del computador, como está especi
 Puedes utilizar el proyecto de las siguientes formas:
 - Accediendo a la API a través de Postman, para poder hacer peticiones HTTP.
 - Ingresando la URL "localhost:8081/*", donde podrás hacer peticiones mediante PathVariable, pero no podrás hacer peticiones PUT y POST que utilizan RequestBody.
-- Ingresando a Swagger a través del siguiente link "http://localhost:8081/swagger-ui/index.html#/", donde podrás ejecutar las peticiones igual que en Postman, pero de una manera más organizada y con las estructuras preestablecidas.
+- Ingresando a Swagger a través del siguiente link "http://localhost:8081/docs-swagger/", donde podrás ejecutar las peticiones igual que en Postman, pero de una manera más organizada y con las estructuras preestablecidas.
 
 ### Autenticación
 
